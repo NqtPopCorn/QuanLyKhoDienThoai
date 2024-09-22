@@ -264,6 +264,10 @@ public class NhanVienDialog extends JDialog {
         } else if(!male.isSelected() && !female.isSelected()){
             JOptionPane.showMessageDialog(this, "Vui lòng chọn giới tính!");
             return false;
+        } //dua 18 tuoi moi duoc
+        else if(new java.util.Date().getTime() - jcBd.getDate().getTime() >= 18*365*24*60*60*1000){
+            JOptionPane.showMessageDialog(this, "Nhân viên phải đủ 18 tuổi trở lên!");
+            return false;
         }
         
         return true;

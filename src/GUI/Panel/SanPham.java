@@ -5,6 +5,7 @@ import DAO.HeDieuHanhDAO;
 import DAO.KhuVucKhoDAO;
 import DAO.ThuongHieuDAO;
 import DAO.XuatXuDAO;
+import DTO.SanPhamDTO;
 import GUI.Component.IntegratedSearch;
 import GUI.Component.MainFunction;
 import GUI.Main;
@@ -155,9 +156,17 @@ public final class SanPham extends JPanel implements ActionListener {
             int index = getRowSelected();
             int maSanPham = (int) tableSanPham.getValueAt(index, 0);
             if (index != -1) {
-                int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa Sản phẩm :)!", "Xóa sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa Sản phẩm :)!",
+                        "Xóa sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                
                 if (input == 0) {
-                    spBUS.delete(findSanPham(maSanPham));
+                    SanPhamDTO sp = findSanPham(maSanPham);
+                    //neu con hang thi khong cho xoa
+                    if(sp.getSoluongton() > 0){
+                        JOptionPane.showMessageDialog(null, "Không thể xóa sản phẩm còn hàng trong kho");
+                        return;
+                    }
+                    else spBUS.delete(sp);
                     loadDataTalbe(listSP);
                 }
             }
